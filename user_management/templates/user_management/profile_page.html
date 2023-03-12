@@ -1,0 +1,104 @@
+{% extends 'master.html' %}
+{% load static %}
+{% block content %}
+
+{% include 'app_partials/navbar.html' %}
+
+<div class="container-xl px-4 mt-4">
+
+  {% include 'app_partials/alerts.html' %}
+
+  <div class="row">
+    
+    <!-- Profile picture card-->
+    <div class="col-xl-4">
+      <div class="card mb-4 mb-xl-0">
+          <div class="card-header">Profile Picture</div>
+          <div class="card-body text-center">
+              <!-- Profile picture image-->
+              <img class="img-account-profile rounded-circle mb-2" src="http://bootdey.com/img/Content/avatar/avatar1.png" alt="">
+              <!-- Profile picture help block-->
+              <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
+              <!-- Profile picture upload button-->
+              <button class="btn btn-primary" type="button">Upload new image</button>
+          </div>
+      </div>
+      
+      </div>
+      <div class="col-xl-8">
+          <!-- Account details card-->
+          <div class="card mb-4">
+              <div class="card-header">Account Details</div>
+              <div class="card-body">
+                  <form action="{% url 'update_info'%}" method="POST">
+                    {% csrf_token %}
+                      <!-- Form Row-->
+                      <div class="row gx-3 mb-3">
+                        <!-- Form Group (first name)-->
+                        <div class="col-md-6">
+                          <label class="small mb-1" for="inputFirstName">First name</label>
+                          <input class="form-control" id="inputFirstName" type="text" name="first_name" placeholder="Enter your first name" value="{{request.user.first_name}}" required>
+                        </div>
+                        <!-- Form Group (last name)-->
+                        <div class="col-md-6">
+                           <label class="small mb-1" for="inputLastName">Last name</label>
+                          <input class="form-control" id="inputLastName" type="text" name="last_name" placeholder="Enter your last name" value="{{request.user.last_name}}" required>
+                        </div>
+                      </div>
+                       <!-- Form Row-->
+                       <div class="row gx-3 mb-3">
+                        <!-- Form Group (phone number)-->
+                        <div class="col-md-6">
+                            <label class="small mb-1" for="inputPhone">Phone number</label>
+                            <input class="form-control" id="inputPhone" type="text"  placeholder="Enter your phone number" name="contact_cell" {% if request.user.contact_cell %}  value="{{request.user.contact_cell}}" {% else %} value="" {% endif %}>
+                        </div>
+                        <!-- Form Group (birthday)-->
+                        <div class="col-md-6">
+                            <label class="small mb-1" for="inputBirthday">Birthday</label>
+                            <input class="form-control" id="inputBirthday" type="date" name="date_of_birth" placeholder="Enter your birthday" value="{{request.user.date_of_birth | date:'Y-m-d'}}" required>
+                        </div>
+
+                        <!-- Form Row-->
+                       <div class="row gx-3 mb-3">
+                        <!-- Form Group (gender)-->
+                        <div class="col-md-6">
+                            <label class="small mb-1" for="inputGender">Gender</label>
+                            <input class="form-control" id="inputGender" type="text"  placeholder="Enter your gender" name="gender"  {% if request.user.gender %}  value="{{request.user.gender}}" {% else %} value="" {% endif %}>
+                        </div>
+                        <!-- Form Group (country)-->
+                        <div class="col-md-6">
+                            <label class="small mb-1" for="inputCountry">Citizenship</label>
+                            <input class="form-control" id="inputCountry" type="text" name="citizenship" placeholder="Enter your citizenship" {% if request.user.citizenship %}  value="{{request.user.citizenship}}" {% else %} value="" {% endif %}>
+                        </div>
+                        
+                    </div>
+                     <!-- Form Group (email address)-->
+                     <div class="mb-3">
+                      <label class="small mb-1" for="inputEmailAddress">Email address</label>
+                      <input class="form-control" id="inputEmailAddress" type="email" placeholder="Enter your email address" name="email" value="{{request.user.email}}" readonly>
+                    </div>
+                      <!-- Form Row        -->
+                      <div class="row gx-3 mb-3">
+                          <!-- Form Group (organization name)-->
+                          <div class="col-md-6">
+                              <label class="small mb-1" for="inputJobTitle">Job Title</label>
+                              <input class="form-control" id="inputJobTitle" type="text" placeholder="Enter your job title" name="job_title" {% if request.user.job_title %}  value="{{request.user.job_title}}" {% else %} value="" {% endif %}>
+                          </div>
+                          <!-- Form Group (home address)-->
+                          <div class="col-md-6">
+                              <label class="small mb-1" for="inputLocation">Home Address</label>
+                              <input class="form-control" id="inputLocation" type="text" placeholder="Enter your home address" name="home_address" {% if request.user.home_address %} value="{{request.user.home_address}}" {% else %} value="" {% endif %} required>
+                          </div>
+                      </div>
+                     
+                     
+                      <!-- Save changes button-->
+                      <button class="btn btn-success" type="submit">Save changes</button>
+                  </form>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+{% endblock %}
